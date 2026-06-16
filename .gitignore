@@ -1,0 +1,38 @@
+# Go binaries and builds
+bin/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+__debug_bin
+sample_app/sample_app
+
+# Local Go compiler installation
+go
+go/
+
+# Sensitive cryptographic materials (prevent committing private keys)
+*.key
+*.pem
+*.crt
+**/*_sk
+**/keystore/
+**/signcerts/
+**/tls/
+
+# Environment files
+.env
+.env.*
+.env.local
+
+# IDE and OS configurations
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+.DS_Store
+Thumbs.db

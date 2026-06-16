@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hyperledger Fabric Car Gateway</title>
+  
+  <!-- Modern Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="/public/styles/styles.css">
+  
+  <!-- JS Scripts -->
+  <script src="/public/scripts/index.js" defer></script>
+</head>
+<body>
+
+  <div class="dashboard">
+    <!-- Header -->
+    <header class="dashboard-header">
+      <div class="title-container">
+        <h1>Fabric Auto-Ledger Gateway</h1>
+        <p>Decentralized Inventory Control & Verification System</p>
+      </div>
+      <div class="status-badge" id="networkStatus">
+        <span class="status-dot"></span>
+        <span id="statusText">Active (Mock Mode)</span>
+      </div>
+    </header>
+
+    <!-- Main Content Grid -->
+    <div class="dashboard-grid">
+      
+      <!-- Panel 1: Register New Automobile -->
+      <section class="panel">
+        <h2 class="panel-title">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          Register Automobile Asset
+        </h2>
+        
+        <form id="createCarForm" onsubmit="addData(event)">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="carId">Asset/Car ID</label>
+              <input type="text" id="carId" placeholder="e.g. CAR101" required>
+            </div>
+            <div class="form-group">
+              <label for="make">Make</label>
+              <input type="text" id="make" placeholder="e.g. Tesla" required>
+            </div>
+            <div class="form-group">
+              <label for="model">Model</label>
+              <input type="text" id="model" placeholder="e.g. Model S" required>
+            </div>
+            <div class="form-group">
+              <label for="color">Color</label>
+              <input type="text" id="color" placeholder="e.g. Midnight Silver" required>
+            </div>
+            <div class="form-group">
+              <label for="dateOfManufacture">Manufacture Date</label>
+              <input type="date" id="dateOfManufacture" required>
+            </div>
+            <div class="form-group">
+              <label for="manufacturerName">Manufacturer Name</label>
+              <input type="text" id="manufacturerName" placeholder="e.g. Tesla Inc" required>
+            </div>
+            
+            <div class="form-group full-width">
+              <button type="submit" class="btn">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                </svg>
+                Commit to Ledger
+              </button>
+            </div>
+          </div>
+        </form>
+      </section>
+
+      <!-- Panel 2: Ledger Queries -->
+      <section class="panel">
+        <h2 class="panel-title">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+          Query Distributed Ledger
+        </h2>
+        
+        <form id="queryCarForm" onsubmit="readData(event)">
+          <div class="search-container">
+            <input type="text" id="carIdInput" placeholder="Enter Asset/Car ID (e.g. CAR101)" required>
+            <button type="submit" class="btn btn-secondary">Query</button>
+          </div>
+        </form>
+
+        <!-- Result Card -->
+        <div class="result-card" id="resultCard">
+          <div id="resultPlaceholder" class="placeholder-text">
+            <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="color: var(--text-secondary); margin-bottom: 1rem; opacity: 0.5;">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"></path>
+            </svg>
+            Submit an Asset ID to inspect the current cryptographically verified state.
+          </div>
+          <div id="resultContent" style="display: none; width: 100%;">
+            <!-- Dynamic Content Rendered by JS -->
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Notification Toast -->
+  <div class="notification" id="toast">
+    <span id="toastIcon"></span>
+    <span id="toastMessage"></span>
+  </div>
+
+</body>
+</html>
